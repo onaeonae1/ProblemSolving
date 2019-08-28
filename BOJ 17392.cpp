@@ -1,3 +1,6 @@
+//2019 숭고한 알고리즘 캠프 초급반 E
+//수학? 확률과 통계 느낌이 조금 난다.
+//생각한 풀이가 맞았고, 쉽게 풀었다.
 #include<iostream>
 using namespace std;
 int squaresum(int a) {
