@@ -27,8 +27,6 @@ int dp(int N, int C, int M) {
 	return board[N][C][M] = minor;
 }
 int main() {
-	freopen("input.txt", "r", stdin);
-	freopen("output.txt", "w", stdout);
 	memset(board, -1, sizeof(board));
 	cin >> n >> m;
 	for (int i = 1; i <= n; i++)  {cin >> A[i];}
