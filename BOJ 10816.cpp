@@ -7,8 +7,6 @@
 #define limit 10000001
 using namespace std;
 int main() {
-	freopen("input.txt", "r", stdin);
-	freopen("output.txt", "w", stdout);
 	vector<int> numbers; //숫자 담음
 	vector<int> results; //결과 담음
 	int m;
