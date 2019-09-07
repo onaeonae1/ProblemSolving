@@ -30,7 +30,6 @@ int main() {
 			board[j][m] = LIM;
 			for (int k = j; k < m; k++) {
 				board[j][m] = min(board[j][m], board[j][k] + board[k + 1][m] + matrix[j - 1] * matrix[k] * matrix[m]);
-
 			}
 		}
 	}
