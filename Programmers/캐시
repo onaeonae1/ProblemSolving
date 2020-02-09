@@ -1,0 +1,79 @@
+#include<iostream>
+#include<string>
+#include<vector>
+#include<map>
+#include<deque>
+using namespace std;
+int solution(int cacheSize, vector<string> cities) {
+	map<string, int> m; 
+	deque<string> cache;
+	int count = 0;
+	if (cacheSize == 0) {
+		for (int i = 0; i < cities.size(); i++) {
+			count += 5;
+		}
+		return count;
+	}
+	for (int i = 0; i < cities.size(); i++) {
+		//DB에 추가할 도시
+		string now = cities.at(i); 
+		int value = m[now]; //있는지 없는지
+		if (cache.size() >= cacheSize) { //꽉참
+			if (value == 0) { //큐에 없음
+				//앞의 요소 제거
+				string element = cache.front();
+				cache.pop_front();
+				m.erase(element);
+				//뒤에 요소 추가
+				cache.push_back(now);
+				m[now] = 1;
+				count += 5;
+			}
+			else { //큐에 있음 -> 해당 요소 제거만 필요
+				deque<string>::iterator it = cache.begin();
+				for (int i = 0; i < cache.size(); i++) {
+					string element = cache.at(i);
+					if (element == now) {
+						cache.erase(it);
+						break;
+					}
+					it++;
+				}
+				cache.push_back(now);
+				count += 1;
+			}
+		}
+		else { //꽉찬거 아님 
+			if (value == 0) { //큐에 없음
+				cache.push_back(now);
+				m[now] = 1;
+				count += 5;
+			}
+			else { //큐에 있음
+				deque<string>::iterator it = cache.begin();
+				for (int i = 0; i < cache.size(); i++) {
+					string element = cache.at(i);
+					if (element == now) {
+						cache.erase(it);
+						break;
+					}
+					it++;
+				}
+				cache.push_back(now);
+				count += 1;
+			}
+		}
+		
+	}
+	return count;
+}
+int main() {
+	//캐시 사이즈와 도시들 정보는 주어진다.
+	int cachesize = 3;
+	vector<string> cities;
+	cities = { "Jeju", "Pangyo", "Seoul", "Jeju", "Pangyo", "Seoul",
+		"Jeju", "Pangyo", "Seoul" };
+	int result = solution(cachesize, cities);
+	cout << result << endl;
+	return 0;
+}
