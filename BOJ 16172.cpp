@@ -1,72 +1,70 @@
-#include<stdio.h>
-#include<string.h>
-#define SIZE 200005
-char temp[SIZE];
-char string[SIZE];
-char key[SIZE];
-int pi[SIZE];
-//상태전이함수 생성
-void kmp() {
-	int n = strlen(key);
-	int i = -1, j = 0;
-	pi[j] = i;
-	while (j < n) {
-		if (i == -1 || (i >= 0 && key[i] == key[j])) {
-			i++;
-			j++;
-			pi[j] = i;
+#include<iostream>
+#include<vector>
+#include<string>
+using namespace std;
+vector<int> getPi(string key) {
+	int n = key.size();
+	vector<int> pi(n+1, 0);
+	int now = -1;
+	int idx = 0; 
+	pi[idx] = now;
+	while (idx < n) {
+		if (now == -1 || (now >= 0 && key[now] == key[idx])) {
+			now++;
+			idx++;
+			pi[idx] = now;
 		}
-		else i = pi[i];
+		else {
+			now = pi[now];
+		}
 	}
+	return pi;
 }
 
-//문자열 비교
-int find_pattern() 
-{
-	int status = 0;
-	int n = strlen(string);
-	int m = strlen(key);
-	int i = 0, j = 0;
-	while (i < n) {
-		if (j == -1 || (j >= 0 && string[i] == key[j]))
-		{
-			i++, j++;
-		}
-		else if (string[i] != key[j])
-		{
-			j = pi[j];
-		}
-		if (j == m)  //맞는 패턴 찾음
-		{
-			status = 1; 
-			j = pi[j];
+string subStr(string raw) {
+	string temp;
+	char st = '0';
+	char ed = '9';
+	for (int i = 0; i < raw.size(); i++) {
+		if (raw.at(i) < st || raw.at(i) > ed) {
+			temp.push_back(raw.at(i));
 		}
 	}
-	return status;
+	return temp;
+	
 }
-void substring()
-{
-	int count = 0;
-	for (int i = 0; i < strlen(temp); i++)
-	{
-		if (temp[i] >= 48 && temp[i] <= 57)
-		{
-
+int searchKMP(string text, string key) {
+	int n = text.size();
+	int m = key.size();
+	vector<int> pi = getPi(key);
+	int flag = 0;
+	int now = 0;
+	int idx = 0;
+	while (idx < n) {
+		if (now == -1 || (now >= 0 && text[idx] == key[now])) {
+			idx++;
+			now++;
 		}
-		else
-		{
-			string[count] = temp[i];
-			count++;
+		else if (text[idx] != key[now]) {
+			now = pi[now];
+		}
+		if (now == m) {
+			flag = 1;
+			now = pi[now];
+			break;
 		}
 	}
+	return flag;
 }
-int main()
-{
-	scanf("%s", temp);
-	scanf("%s", key);
-	substring();
-	kmp();
-	int result = find_pattern();
-	printf("%d\n", result);
+int main() {
+    	ios::sync_with_stdio(false);
+	cin.tie(0);
+	string text;
+	string pattern;
+	cin >> text;
+	cin >> pattern;
+	text = subStr(text);
+	int result = searchKMP(text, pattern);
+	printf("%d", result);
 	return 0;
 }
