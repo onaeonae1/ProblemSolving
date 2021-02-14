@@ -1,6 +1,5 @@
 #include<iostream>
 #define L 505
-#define HEIGHT 10001
 using namespace std;
 int n, m;
 int board[L][L];
@@ -29,15 +28,6 @@ int dfs(int y , int x) {
 }
 int main() {
 	scanf("%d %d", &n, &m);
-	//초기화 문제 : 0 관련은 모두 최대 높이 처리
-	for (int i = 0; i <= n; i++) {
-		board[i][0] = HEIGHT;
-		dp[i][0] = -1;
-	}
-	for (int i = 0; i <= m; i++) {
-		board[0][i] = HEIGHT;
-		dp[0][i] = -1;
-	}
 	for (int i = 1; i <= n; i++) {
 		for (int j = 1; j <= m; j++) {
 			// 배열 입력받고 DP 초기화
