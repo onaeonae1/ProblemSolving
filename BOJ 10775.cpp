@@ -1,10 +1,9 @@
 #include<iostream>
-#define L 100005
+#define L 10005
 using namespace std;
 int parent[L];
 int G;
 int P;
-int gi[L];
 int cnt;
 int find_parent(int alpha) {
 	if (alpha == parent[alpha]) {
