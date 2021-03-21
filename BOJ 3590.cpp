@@ -78,12 +78,14 @@ int main() {
 						cout << token;
 					}
 					else if (abbcase == -1) { //일반 단어.
+						// 일단 출력하기
 						cout << token;
+						// 축약어 형태로 변환-> dict에 저장하기 위해. 소문자/숫자/소문자 형태로
 						string abbToken = toLower(token.front()) + to_string(token.size() - 2) + toLower(token.back());
 						if (dict.find(abbToken) == dict.end()) {
 							dict[abbToken] = token;
 						}
-						else { //이미 사전에 존재
+						else { //이미 사전에 존재하는 단어 -> 모호함 체크 필요
 							for (int i = 1; i < dict[abbToken].size(); i++) {
 								// 사전에 존재하는 것과 다른지 체크. 다르다면 모호함 set에 추가
 								if (toLower(dict[abbToken][i]) != toLower(token[i])) {
@@ -103,7 +105,7 @@ int main() {
 							// 모두 대문자 처리 필요한 경우
 							bool allUpper = getCase(token.front()) && getCase(token.back());
 							// 앞은 그대로 출력하고 뒤의 문자들 출력하기
-              cout << token.front();
+							cout << token.front();
 							for (int i = 1; i < dict[abbToken].size(); i++) {
 								if (allUpper) cout << toUpper(dict[abbToken][i]);
 								else cout << toLower(dict[abbToken][i]);
