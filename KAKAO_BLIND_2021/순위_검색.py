@@ -2,25 +2,18 @@ from itertools import combinations
 from bisect import bisect_left
 
 def replace_with_zeros(input_str):
+    result_set = set()
+    result_set.add(input_str)
     length = len(input_str)
-    results = set()  # 중복을 피하기 위해 set 사용
-    results.add(input_str)
-    for i in range(length):
-        new_str = input_str[:i] + '0' + input_str[i+1:]
-        results.add(new_str)
-
-    for i, j in combinations(range(length), 2):
-        new_str = input_str[:i] + '0' + input_str[i+1:j] + '0' + input_str[j+1:]
-        results.add(new_str)
-
-    for i, j, k in combinations(range(length), 3):
-        new_str = input_str[:i] + '0' + input_str[i+1:j] + '0' + input_str[j+1:k] + '0' + input_str[k+1:]
-        results.add(new_str)
-
-    # 모든 자리를 0으로 바꾸기
-    results.add('0' * length)
-
-    return list(results)
+    
+    for i in range(1, length+1):
+        for case in combinations(range(length), i):
+            new_str = list(input_str)
+            for idx in case:
+                new_str[idx]="0"
+            result_set.add("".join(new_str))
+    
+    return list(result_set)
 
 def solution(info, query):
     answer = []
